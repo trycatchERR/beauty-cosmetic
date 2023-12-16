@@ -1,3 +1,10 @@
+<?php
+function format_rp($number)
+{
+    return 'Rp ' . number_format($number, 0, '.', '.');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,7 +39,7 @@
             <li class="nav-item active">
               <a class="nav-link" href="/">Home</a>
             </li>
-            <li><a class="nav-link" href="/product">Product</a></li>
+            <li><a class="nav-link" href="/products">Product</a></li>
             <li><a class="nav-link" href="/about">About us</a></li>
             <li><a class="nav-link" href="/contact">Contact us</a></li>
           </ul>
@@ -58,7 +65,7 @@
             <div class="intro-excerpt">
               <h1>Beauty Inside <span clsas="d-block">& Outside</span></h1>
               <p class="mb-4">Pancarkan dan sempurnakan kecantikanmu dengan berbagai produk kosmetik yang kami hadirkan!</p>
-              <p><a href="/product" class="btn btn-secondary me-2">Shop Now</a></p>
+              <p><a href="/products" class="btn btn-secondary me-2">Shop Now</a></p>
             </div>
           </div>
           <div class="col-lg-7">
@@ -79,51 +86,30 @@
           <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
             <h2 class="mb-4 section-title">Beauty begins here.</h2>
             <p class="mb-4">Unlock your shine, be more attractive.</p>
-            <p><a href="/product" class="btn">Explore</a></p>
+            <p><a href="/products" class="btn">Explore</a></p>
           </div>
           <!-- End Column 1 -->
 
-          <!-- Start Column 2 -->
+          <!-- Start Column Product -->
+        @foreach ($products as $product)
           <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-            <a class="product-item" href="/cart">
-              <img src="images/serum1.png" class="img-fluid product-thumbnail" width="250" height="250"/>
-              <h3 class="product-title">5% Mandelic Acid Mild Exfoliating Serum</h3>
-              <strong class="product-price">Rp 131.000</strong>
+            <a class="product-item" href="/products/{{ $product->id }}">
+              <img src="{{ $product->image }}" class="img-fluid product-thumbnail" width="250" height="250"/>
+              <h3 class="product-title">{{ $product->name }}</h3>
+              <strong class="product-price">{{ format_rp($product->price) }}</strong>
 
-              <span class="icon-cross">
-                <img src="images/cross.svg" class="img-fluid" />
-              </span>
+              <form action="/carts" method="POST" class="icon-cross">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}" />
+                <button type="submit" style="border: none; padding: 0; margin: 0; background: none;">
+                  <img src="images/cross.svg" class="img-fluid" />
+                </button>
+              </form>
             </a>
           </div>
-          <!-- End Column 2 -->
+        @endforeach
+          <!-- End Column Product -->
 
-          <!-- Start Column 3 -->
-          <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-            <a class="product-item" href="/cart">
-              <img src="images/skincare1.png" class="img-fluid product-thumbnail" />
-              <h3 class="product-title">ACNE SHOT AC Overnight Treatment Spot Cream</h3>
-              <strong class="product-price">Rp 93.500</strong>
-
-              <span class="icon-cross">
-                <img src="images/cross.svg" class="img-fluid" />
-              </span>
-            </a>
-          </div>
-          <!-- End Column 3 -->
-
-          <!-- Start Column 4 -->
-          <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-            <a class="product-item" href="/cart">
-              <img src="images/skincare3.png" class="img-fluid product-thumbnail" />
-              <h3 class="product-title">Calm Down! Skinpair Bubble Cleanser</h3>
-              <strong class="product-price">Rp 109.000</strong>
-
-              <span class="icon-cross">
-                <img src="images/cross.svg" class="img-fluid" />
-              </span>
-            </a>
-          </div>
-          <!-- End Column 4 -->
         </div>
       </div>
     </div>
@@ -226,42 +212,42 @@
               </div>
               <div class="pt-3">
                 <h3>pH Restore Hair Rinsing Vinegar</h3>
-                <p>Cuka rambut khusus yang menetralkan & menyeimbangkan tingkat pH 
+                <p>Cuka rambut khusus yang menetralkan & menyeimbangkan tingkat pH
 					untuk mencegah ketombe, gatal dan rambut rontok.</p>
                 <p><a href="/cart" class="btn btn-secondary me-2">Buy Now</a></p>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="col-12  col-md-6 col-lg-4 mb-4 mb-lg-0">
             <div class="d-flex">
               <div class="thumbnail">
                 <img src="images/product4.png" alt="Image" class="img-fluid" />
               </div>
               <div class="pt-3">
                 <h3>Sunscreen Gel SPF 50+ PA++++</h3>
-                <p>Gel Tabir Surya dengan SPF 50+ PA++++ & teknologi Encapsulated 
+                <p>Gel Tabir Surya dengan SPF 50+ PA++++ & teknologi Encapsulated
 					UV Filter yang memberikan perlindungan maksimal dari sinar UVA & UVB.</p>
                 <p><a href="/cart" class="btn btn-secondary me-2">Buy Now</a></p>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class=" col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
             <div class="d-flex">
               <div class="thumbnail">
                 <img src="images/product51.png" alt="Image" class="img-fluid" />
               </div>
               <div class="pt-3">
                 <h3>Lipvocado Vegan Lip Treatment Tint</h3>
-                <p>100% lip balm vegan berwarna dengan hasil akhir noda alami, diresapi dengan 
+                <p>100% lip balm vegan berwarna dengan hasil akhir noda alami, diresapi dengan
 					Avocado Oil & Hyaluronic Acid untuk melembabkan & mengurangi garis-garis halus pada bibir.<p><a href="/cart" class="btn btn-secondary me-2">Buy Now</a></p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
     <!-- End Popular Product -->
 
     <!-- Start Testimonial Slider -->
@@ -289,12 +275,12 @@
                       <div class="testimonial-block text-center">
                         <blockquote class="mb-5">
                           <p>
-                            &ldquo;Saya telah menggunakan website ini untuk beberapa bulan, dan saya sangat senang dengan pengalaman berbelanja saya. 
+                            &ldquo;Saya telah menggunakan website ini untuk beberapa bulan, dan saya sangat senang dengan pengalaman berbelanja saya.
 							Mereka memiliki berbagai produk kosmetik yang sangat berkualitas dan beragam. Saya telah menemukan banyak produk favorit saya di sini.&ldquo;</p>
                         </blockquote>
 
                         <div class="author-info">
-                          <div class="author-pic">
+                          <div class="author-pic ">
                             <img src="images/person-1.png" alt="Maria" class="img-fluid" />
                           </div>
                           <h3 class="font-weight-bold">Maria</h3>
@@ -304,7 +290,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- END item -->
 
                 <div class="item">
@@ -312,15 +298,15 @@
                     <div class="col-lg-8 mx-auto">
                       <div class="testimonial-block text-center">
                         <blockquote class="mb-5">
-                          <p>
+                                          <p>
                             &ldquo;Produk yang saya beli selalu datang dalam kemasan yang aman, sehingga saya tidak perlu khawatir tentang kerusakan dalam perjalanan pengiriman.
-							Produk-produk yang saya beli dari sini sangat berkualitas, dan saya telah melihat perubahan positif pada kulit saya sejak saya mulai menggunakannya. 
+							Produk-produk yang saya beli dari sini sangat berkualitas, dan saya telah melihat perubahan positif pada kulit saya sejak saya mulai menggunakannya.
 							Saya telah merekomendasikan website ini kepada teman-teman saya, dan saya akan terus berbelanja di sini. Terima kasih banyak!&ldquo;</p>
                         </blockquote>
 
                         <div class="author-info">
                           <div class="author-pic">
-                            <img src="images/person_3.jpg" alt="Marco" class="img-fluid" />
+                            <im g src="images/person_3.jpg" alt="Marco" class="img-fluid" />
                           </div>
                           <h3 class="font-weight-bold">Marco</h3>
                           <span class="position d-block mb-3">Pengusaha</span>
@@ -337,17 +323,17 @@
                       <div class="testimonial-block text-center">
                         <blockquote class="mb-5">
                           <p>
-                            &ldquo;Secara keseluruhan, saya sangat merekomendasikan website ini kepada siapa saja yang mencari produk kosmetik berkualitas dengan pengalaman 
-							berbelanja yang menyenangkan. Proses pembelian sangat mudah dan cepat. Saya tidak pernah mengalami masalah saat melakukan pembayaran ataupun pengiriman 
+                            &ldquo;Secara keseluruhan, saya sangat merekomendasikan website ini kepada siapa saja yang mencari produk kosmetik berkualitas dengan pengalaman
+							berbelanja yang menyenangkan. Proses pembelian sangat mudah dan cepat. Saya tidak pernah mengalami masalah saat melakukan pembayaran ataupun pengiriman
 							pesanan.&rdquo;
                           </p>
                         </blockquote>
 
                         <div class="author-info">
-                          <div class="author-pic">
+                          <div class ="author-pic">
                             <img src="images/person_2.jpg" alt="Jonathan" class="img-fluid" />
                           </div>
-                          <h3 class="font-weight-bold">Jonathan</h3>
+                           <h3 class="font-weight-bold">Jonathan</h3>
                           <span class="position d-block mb-3">Pengacara</span>
                         </div>
                       </div>
@@ -398,10 +384,10 @@
               <div class="col-6 col-sm-6 col-md-3">
                 <ul class="list-unstyled">
 				  <li><a href="/login">Login</a></li>
-                  <li><a href="/product">Product</a></li>
+                  <li><a href="/products">Product</a></li>
                 </ul>
               </div>
-			  
+
 			  <div class="col-6 col-sm-6 col-md-3">
                 <ul class="list-unstyled">
 				  <li><a href="/cart">Cart</a></li>
@@ -412,7 +398,7 @@
 			  <div class="col-6 col-sm-6 col-md-3">
                 <ul class="list-unstyled">
 				  <li><a href="/testimonials">Testimonials</a></li>
-                  <li><a href="/about">About us</a></li>
+                  <li><a href=			  "/about">About us</a></li>
                 </ul>
               </div>
 
@@ -421,7 +407,7 @@
 				  <li><a href="/contact">Contact us</a></li>
                 </ul>
               </div>
-		
+
 
         <div class="border-top copyright">
           <div class="row pt-4">
@@ -431,7 +417,7 @@
                 <script>
                   document.write(new Date().getFullYear());
                 </script>
-                . All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>
+                . All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a		> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>
                 </p>
             </div>
 

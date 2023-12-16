@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('payment_providers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->enum('role', ['admin', 'customer'])->default('customer');
-            $table->rememberToken();
+            $table->string('image')->nullable();
+            $table->bigInteger('payment_method_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('payment_method_id')->references('id')->on('payment_methods');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('payment_providers');
     }
 };

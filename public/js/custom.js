@@ -30,16 +30,16 @@
         function createBindings(quantityContainer) {
             var quantityAmount =
                 quantityContainer.getElementsByClassName("quantity-amount")[0];
-            var increase =
-                quantityContainer.getElementsByClassName("increase")[0];
-            var decrease =
-                quantityContainer.getElementsByClassName("decrease")[0];
-            increase.addEventListener("click", function (e) {
-                increaseValue(e, quantityAmount);
-            });
-            decrease.addEventListener("click", function (e) {
-                decreaseValue(e, quantityAmount);
-            });
+            // var increase =
+            //     quantityContainer.getElementsByClassName("increase")[0];
+            // var decrease =
+            //     quantityContainer.getElementsByClassName("decrease")[0];
+            // increase.addEventListener("click", function (e) {
+            //     increaseValue(e, quantityAmount);
+            // });
+            // decrease.addEventListener("click", function (e) {
+            //     decreaseValue(e, quantityAmount);
+            // });
         }
 
         function init() {
