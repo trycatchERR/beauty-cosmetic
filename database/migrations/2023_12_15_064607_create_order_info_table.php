@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('order_info', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('order_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->string('country')->nullable();
             $table->string('first_name')->nullable();
@@ -29,7 +28,6 @@ return new class extends Migration
             $table->string('order_notes')->nullable();
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

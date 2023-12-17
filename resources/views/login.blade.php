@@ -2,68 +2,275 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-
+     alpha/css/bootstrap.css"
+        rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <title>Sign In</title>
+    <style>
+        .link {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            background-color: #3b82f6;
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            max-width: max-content;
+        }
+
+        .input {
+            padding: 0.7rem 0.7rem;
+            border-radius: 0.375rem;
+            border: 1px solid #d1d5db;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .input:focus {
+            box-shadow: 0 0 0 2px #2563eb;
+            border-color: transparent;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .btn-primary {
+            width: 100%;
+            border-radius: 2rem;
+            background-color: #3b5d50;
+            padding: 0.7rem 0;
+            font-weight: 600;
+            color: #fff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.8;
+        }
+
+        .btn-primary-sm {
+            padding: 0.5rem 1.25rem;
+            border-radius: 2rem;
+            background-color: #000;
+            font-weight: 600;
+            color: #fff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary-sm:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .btn-sm-no-color {
+            padding: 0.5rem 1.25rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-border {
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            border: 1px solid #6b7280;
+            color: #000;
+            cursor: pointer;
+            display: block;
+            max-width: max-content;
+        }
+
+        .transitions {
+            transition: all 0.3s ease-in-out;
+        }
+
+
+        .fa-solid.fa-bell {
+            display: none;
+        }
+
+        .notification-btn:hover .fa-regular.fa-bell {
+            display: none;
+        }
+
+        .notification-btn:hover .fa-solid.fa-bell {
+            display: inline-block;
+        }
+
+
+        .fa-solid.fa-paper-plane {
+            display: none;
+        }
+
+        .invitations-btn:hover .fa-regular.fa-paper-plane {
+            display: none;
+        }
+
+        .invitations-btn:hover .fa-solid.fa-paper-plane {
+            display: inline-block;
+        }
+
+        .group-card:hover .timer {
+            display: block;
+            opacity: 1;
+
+            transition: opacity 0.3s ease-in-out;
+            -moz-transition: opacity 0.3s ease-in-out;
+            -webkit-transition: opacity 0.3s ease-in-out;
+            -o-transition: opacity 0.3s ease-in-out;
+
+        }
+
+        .text-gradient-mint-blue-dark {
+            background: -webkit-linear-gradient(-70deg, #a2facf 0%, #64acff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-coral-yellow-dark {
+            background: -webkit-linear-gradient(-70deg, #ff7170 0%, #ffe57f 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-turq-purple-dark {
+            background: -webkit-linear-gradient(-70deg, #3bf0e4 0%, #bca1f7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-blue-green {
+            background: -webkit-linear-gradient(-70deg, #2188ff 0%, #01a49e 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-red-orange {
+            background: -webkit-linear-gradient(-70deg, #ed4e50 0%, #f06f00 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-purple-coral {
+            background: -webkit-linear-gradient(-70deg, #9867f0 0%, #ed4e50 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-blue-purple {
+            background: -webkit-linear-gradient(-70deg, #2188ff 0%, #804eda 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-mint-blue {
+            background: linear-gradient(271.72deg, #a2facf 7.09%, #64acff 96.61%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-pink-blue {
+            background: -webkit-linear-gradient(-70deg, #db469f 0%, #2188ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-mktg {
+            background: -webkit-linear-gradient(-70deg,
+                    var(--mktg-accent-primary, #9867f0) 0%,
+                    var(--mktg-accent-secondary, #ed4e50) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-copilot {
+            background: -webkit-linear-gradient(300deg, #93f5ec 20%, #a77bf3 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .text-gradient-premium-support {
+            background: -webkit-linear-gradient(0deg, #79c0ff 0%, #d2a8ff 57.57%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+        }
+    </style>
 </head>
 
 <body>
-    <section class="vh-100" style="background-color: #9A616D;">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col col-xl-10">
-                    <div class="card" style="border-radius: 1rem;">
-                        <div class="row g-0">
-                            <div class="col-md-6 col-lg-5 d-none d-md-block">
-                                <img src="images/kosmetik1.png" alt="login form" class="img-fluid"
-                                    style="border-radius: 1rem 0 0 1rem;" />
-                            </div>
-                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                                <div class="card-body p-4 p-lg-5 text-black">
-
-
-                                    <div class="d-flex align-items-center mb-3 pb-1">
-                                        <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                                        <span class="h1 fw-bold mb-0">Beauty Cosmetics<span>.</span>
-                                    </div>
-
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account
-                                    </h5>
-
-                                    <form action="/login" method="POST">
-                                        @csrf
-                                        <div class="form-outline mb-4">
-                                            <input type="email" id="form2Example17"
-                                                class="form-control form-control-lg" name="email"/>
-                                            <label class="form-label" for="form2Example17">Email address</label>
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            <input type="password" id="form2Example27"
-                                                class="form-control form-control-lg" name="password"/>
-                                            <label class="form-label" for="form2Example27">Password</label>
-                                        </div>
-
-                                        <div class="pt-1 mb-4">
-                                            <button class="btn btn-dark btn-lg btn-block">Login</button>
-                                        </div>
-
-                                        <a class="small text-muted" href="#!">Forgot password?</a>
-                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a
-                                                href="/signup" style="color: #393f81;">Register here</a></p>
-                                        <a href="#!" class="small text-muted">Terms of use.</a>
-                                        <a href="#!" class="small text-muted">Privacy policy</a>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="flex h-screen items-center">
+        <div class="container mx-auto max-w-md px-4">
+            <h1 class="text-[#3b5d50] mb-8 text-3xl font-bold">Sign in</h1>
+            <form action="/login" method="POST"> @csrf
+                <div class="flex flex-col">
+                    <label for="email" class="font-semibold">Email</label>
+                    <input type="email" name="email" class="input mt-2
+                    ">
+                    @error('email')
+                        <div class="mt-0.5 text-sm text-red-500">{{ $message }}</div>
+                    @enderror
                 </div>
-            </div>
+                <div class="mt-6 flex flex-col">
+                    <div class="flex justify-between">
+                        <label for="password" class="font-semibold">Password</label>
+                    </div>
+                    <input type="password" name="password" id="" class="input mt-2">
+                    @error('password')
+                        <div class="mt-0.5 text-sm text-red-500">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="flex mt-8 gap-4">
+                    <a href="/" class="btn-primary w-[20%] flex justify-center items-center ">
+                        <i class="fa-solid fa-house fa-lg"></i>
+                    </a>
+                    <button class="btn-primary">Sign
+                        In</button>
+                </div>
+            </form>
+            <div class="mt-4 text-center text-sm">Don't have account? <a href="/signup"
+                    class="cursor-pointer font-thin underline">Sign
+                    Up</a></div>
         </div>
-    </section>
+    </div>
 </body>
 
 </html>

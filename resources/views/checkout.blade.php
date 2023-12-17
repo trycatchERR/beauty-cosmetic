@@ -36,37 +36,19 @@ function format_rp($number)
 
 <body>
     <!-- Start Header/Navigation -->
-    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
-        <div class="container">
-            <a class="navbar-brand" href="/">Beauty Cosmetics<span>.</span></a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
-                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarsFurni">
-                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li><a class="nav-link" href="/products">Product</a></li>
-                    <li><a class="nav-link" href="/about">About us</a></li>
-                    <li><a class="nav-link" href="/contact">Contact us</a></li>
-                </ul>
-
-                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                    <li>
-                        <a class="nav-link" href="/login"><img src="images/user.svg" /></a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/cart"><img src="images/cart.svg" /></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    @include('partials.nav')
     <!-- End Header/Navigation -->
+
+    {{-- show all error --}}
+    {{-- @if ($errors->any())
+        <div class="alert alert-danger" style="margin-top: 10px; margin-bottom: 0px">
+            <ul style="margin-bottom: 0px">
+                @foreach ($errors->all() as $error)
+                    <li style="margin-bottom: 0px">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif --}}
 
     <!-- Start Hero Section -->
     <div class="hero">
@@ -84,12 +66,21 @@ function format_rp($number)
     <!-- End Hero Section -->
 
     <div class="untree_co-section">
+        @if($is_cart_empty)
         <div class="container">
-            <div class="row mb-5">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="border p-4 rounded" role="alert">Your cart is empty. <a href="/products">Click here</a> to shop</div>
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="container">
+            {{-- <div class="row mb-5">
                 <div class="col-md-12">
                     <div class="border p-4 rounded" role="alert"><a href="/login">Click here</a> to login</div>
                 </div>
-            </div>
+            </div> --}}
             <form action="/orders/checkout" method="POST">
                 @csrf
                 <div class="row">
@@ -163,9 +154,8 @@ function format_rp($number)
                                 <div class="col-md-12">
                                     <label for="street_address" class="text-black">Address <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="street_address"
-                                        name="street_address" placeholder="Street address"
-                                        value="{{ old('street_address') }}" />
+                                    <input type="text" class="form-control" id="street_address" name="street_address"
+                                        placeholder="Street address" value="{{ old('street_address') }}" />
                                     @error('street_address')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -183,7 +173,7 @@ function format_rp($number)
 
                             <div class="form-group row mt-2">
                                 <div class="col-md-6">
-                                    <label for="state" class="text-black">State / Country <span
+                                    <label for="state" class="text-black">State  <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="state" name="state"
                                         value="{{ old('state') }}" />
@@ -316,7 +306,22 @@ function format_rp($number)
                                     @endforeach
 
                                     <div class="form-group">
-                                        <button class="btn btn-black btn-lg py-3 btn-block">Place Order</button>
+                                        @error('provider_id')
+                                            <div class="text-danger" style="margin-top: -10px; margin-bottom: 10px;">Please select payment provider</div>
+                                        @enderror
+
+                                        <div>
+                                            <label for="account_number" class="text-black">Account Number <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="account_number"
+                                                name="account_number" placeholder="Enter Your Account Number"
+                                                value="{{ old('account_number') }}" />
+                                            @error('account_number')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <button class="btn btn-black btn-lg py-3 btn-block" style="margin-top: 30px">Place Order</button>
                                     </div>
                                 </div>
                             </div>
@@ -326,94 +331,11 @@ function format_rp($number)
             </form>
             <!-- </form> -->
         </div>
+        @endif
     </div>
 
     <!-- Start Footer Section -->
-    <footer class="footer-section">
-        <div class="container relative">
-            <div class="row">
-                <div class="col-lg-8">
-
-                    <div class="row g-5 mb-5">
-                        <div class="col-lg-4">
-                            <div class="mb-4 footer-logo-wrap">
-                                <a href="#" class="footer-logo">Beauty Cosmetics<span>.</span></a>
-                            </div>
-                            <p class="mb-4">Pancarkan dan sempurnakan kecantikanmu dengan berbagai produk kosmetik
-                                yang kami hadirkan!. Temukan kami juga di:</p>
-
-                            <ul class="list-unstyled custom-social">
-                                <li>
-                                    <a href="https://www.facebook.com/"><span
-                                            class="fa fa-brands fa-facebook-f"></span></a>
-                                </li>
-                                <li>
-                                    <a href="https://twitter.com/"><span class="fa fa-brands fa-twitter"></span></a>
-                                </li>
-                                <li>
-                                    <a href="https://www.instagram.com/"><span
-                                            class="fa fa-brands fa-instagram"></span></a>
-                                </li>
-                                <li>
-                                    <a href="https://www.tiktok.com/"><span class="fa fa-brands fa-tiktok"></span></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-8">
-                            <div class="row links-wrap">
-                                <div class="col-6 col-sm-6 col-md-3">
-                                    <ul class="list-unstyled">
-                                        <li><a href="/login">Login</a></li>
-                                        <li><a href="/products">Product</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="col-6 col-sm-6 col-md-3">
-                                    <ul class="list-unstyled">
-                                        <li><a href="/cart">Cart</a></li>
-                                        <li><a href="/checkout">Checkout</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="col-6 col-sm-6 col-md-3">
-                                    <ul class="list-unstyled">
-                                        <li><a href="/testimonials">Testimonials</a></li>
-                                        <li><a href="/about">About us</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="col-6 col-sm-6 col-md-3">
-                                    <ul class="list-unstyled">
-                                        <li><a href="/contact">Contact us</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="border-top copyright">
-                                    <div class="row pt-4">
-                                        <div class="col-lg-6">
-                                            <p class="mb-2 text-center text-lg-start">
-                                                Copyright &copy;
-                                                <script>
-                                                    document.write(new Date().getFullYear());
-                                                </script>
-                                                . All Rights Reserved. &mdash; Designed with love by <a
-                                                    href="https://untree.co">Untree.co</a> Distributed By <a
-                                                    hreff="https://themewagon.com">ThemeWagon</a>
-                                                <!-- License information: https://untree.co/license/ -->
-                                            </p>
-                                        </div>
-
-                                        <div class="col-lg-6 text-center text-lg-end">
-                                            <ul class="list-unstyled d-inline-flex ms-auto">
-                                                <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
-                                                <li><a href="#">Privacy Policy</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    </footer>
+    @include('partials.footer')
     <!-- End Footer Section -->
 
     <script>
@@ -433,47 +355,57 @@ function format_rp($number)
             var applyButton = $("#button-addon2");
             var couponInput = $("#coupon-input");
 
-            applyButton.on("click", function(event) {
+            function proceedCoupon(event) {
                 event.preventDefault();
                 console.log("Coupon Code:", couponInput.val());
+
+                $.ajax({
+                    url: "/coupon/apply",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        coupon_code: couponInput.val()
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response == -1) {
+                            $("#coupon-message").html("Coupon code is not valid").css("color",
+                                "red");
+                        } else {
+                            $("#coupon-message").html("Coupon code is applied").css("color",
+                                "green");
+                            couponInput.prop("disabled", true);
+                            applyButton.prop("disabled", true);
+                            $("#coupon-id").val(response);
+
+                            response = JSON.parse(response);
+                            // strike through the order total
+                            $("#order-total").html("<del>" + $("#order-total").html() + "</del>")
+                                .css("color", "red");
+                            // add new total price beside the old one
+                            const newTotalPriceInRp = new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(response.new_total_price);
+                            $("#order-total").parent().append("<br><span>" + newTotalPriceInRp +
+                                "</span>").css("font-weight", "bold");
+                            // add discount message
+                            $("#discount-message").html(response.coupon.description).css("color",
+                                "green");
+                            // set coupon id
+                            $("#coupon-id").val(response.coupon.id);
+                        }
+                    }
+                });
+
+            }
+
+            applyButton.on("click", function(event) {
+                proceedCoupon(event);
             });
 
             couponInput.on("keydown", function(event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    console.log("Coupon Code:", couponInput.val());
-
-                    $.ajax({
-                        url: "/coupon/apply",
-                        method: "POST",
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            coupon_code: couponInput.val()
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            if(response == -1) {
-                                $("#coupon-message").html("Coupon code is not valid").css("color", "red");
-                            } else {
-                                $("#coupon-message").html("Coupon code is applied").css("color", "green");
-                                couponInput.prop("disabled", true);
-                                applyButton.prop("disabled", true);
-                                $("#coupon-id").val(response);
-
-                                response = JSON.parse(response);
-                                // strike through the order total
-                                $("#order-total").html("<del>" + $("#order-total").html() + "</del>").css("color", "red");
-                                // add new total price beside the old one
-                                const newTotalPriceInRp = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(response.new_total_price);
-                                $("#order-total").parent().append("<br><span>" + newTotalPriceInRp + "</span>").css("font-weight", "bold");
-                                // add discount message
-                                $("#discount-message").html(response.coupon.description).css("color", "green");
-                                // set coupon id
-                                $("#coupon-id").val(response.coupon.id);
-                            }
-                        }
-                    });
-                }
+                if (event.keyCode == 13) proceedCoupon(event);
             });
         });
     </script>

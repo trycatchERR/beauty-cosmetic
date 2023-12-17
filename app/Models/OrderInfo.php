@@ -9,6 +9,7 @@ class OrderInfo extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $table = 'order_info';
 
     public function order()
     {

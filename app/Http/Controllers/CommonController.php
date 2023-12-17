@@ -10,8 +10,10 @@ class CommonController extends Controller
     public function homeView()
     {
         $products = Product::limit(3)->get();
+        $products_sorted = Product::orderBy('name', 'asc')->limit(3)->get();
         return view('index', [
-            'products' => $products
+            'products' => $products,
+            'products_sorted' => $products_sorted
         ]);
     }
 

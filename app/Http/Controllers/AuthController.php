@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -19,7 +20,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-        return redirect()->route('login');
+        return redirect('/');
     }
 
     public function login(Request $request)
@@ -35,9 +36,20 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $credentials = $request->only(['email', 'password']);
-        $credentials['password'] = bcrypt($credentials['password']);
-        auth()->attempt($credentials);
+        $request->validate([
+            'email' => 'email|required|unique:users',
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|same:password'
+        ]);
+
+        $user = new User();
+        $user->name = 'user' . rand(100000, 999999);
+        $user->email = $request->get('email');
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
+
+        auth()->login($user);
+
         return redirect()->route('home');
     }
 }

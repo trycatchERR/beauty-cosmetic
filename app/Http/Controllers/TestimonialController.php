@@ -16,9 +16,17 @@ class TestimonialController extends Controller
 
     public function create(Request $request)
     {
+        $request->validate([
+            'message' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required'
+        ]);
+
         Testimonial::create([
             'message' => $request->message,
             'user_id' => Auth::id(),
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name
         ]);
 
         return back()->with('success', 'Testimonial sended');

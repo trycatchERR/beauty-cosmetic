@@ -21,34 +21,7 @@
 <body>
 
     <!-- Start Header/Navigation -->
-    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
-
-        <div class="container">
-            <a class="navbar-brand" href="/">Beauty Cosmetics<span>.</span></a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
-                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarsFurni">
-                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li><a class="nav-link" href="/products">Product</a></li>
-                    <li><a class="nav-link" href="/about">About us</a></li>
-                    <li class="active"><a class="nav-link" href="/contact">Contact us</a></li>
-                </ul>
-
-                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                    <li><a class="nav-link" href="/login"><img src="images/user.svg"></a></li>
-                    <li><a class="nav-link" href="/cart"><img src="images/cart.svg"></a></li>
-                </ul>
-            </div>
-        </div>
-
-    </nav>
+    @include('partials.nav')
     <!-- End Header/Navigation -->
 
     <!-- Start Hero Section -->
@@ -135,32 +108,46 @@
                             </div>
                         </div>
 
-                        <form>
+                        @if (session()->has('success'))
+                            <div class="alert alert-success">{{ session()->get('success') }}</div>
+                        @endif
+
+                        <form method="POST" action="/testimonials">
+                            @csrf
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class="text-black" for="fname">First name</label>
-                                        <input type="text" class="form-control" id="fname">
+                                        <input type="text" class="form-control" id="fname" name="first_name">
                                     </div>
+                                    @error('first_name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label class="text-black" for="lname">Last name</label>
-                                        <input type="text" class="form-control" id="lname">
+                                        <input type="text" class="form-control" id="lname" name="last_name">
                                     </div>
+                                    @error('last_name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label class="text-black" for="email">Email address</label>
                                 <input type="email" class="form-control" id="email">
-                            </div>
+                            </div> --}}
 
-                            <div class="form-group mb-5">
+                            <div class="form-group mb-5" style="margin-top: 10px">
                                 <label class="text-black" for="message">Message</label>
-                                <textarea name="" class="form-control" id="message" cols="30" rows="5"></textarea>
+                                <textarea class="form-control" id="message" name="message" cols="30" rows="5"></textarea>
+                                @error('message')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary-hover-outline" disabled>Send
+                            <button type="submit" class="btn btn-primary-hover-outline">Send
                                 Message</button>
                         </form>
 
@@ -181,91 +168,7 @@
 
 
     <!-- Start Footer Section -->
-    <footer class="footer-section">
-        <div class="container relative">
-
-            <div class="row">
-                <div class="col-lg-8">
-                </div>
-            </div>
-
-            <div class="row g-5 mb-5">
-                <div class="col-lg-4">
-                    <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Beauty
-                            Cosmetics<span>.</span></a></div>
-                    <p class="mb-4">Pancarkan dan sempurnakan kecantikanmu dengan berbagai produk kosmetik yang kami
-                        hadirkan!. Temukan kami juga di:</p>
-
-                    <ul class="list-unstyled custom-social">
-                        <li>
-                            <a href="https://www.facebook.com/"><span class="fa fa-brands fa-facebook-f"></span></a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/"><span class="fa fa-brands fa-twitter"></span></a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/"><span class="fa fa-brands fa-instagram"></span></a>
-                        </li>
-                        <li>
-                            <a href="https://www.tiktok.com/"><span class="fa fa-brands fa-tiktok"></span></a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-8">
-                    <div class="row links-wrap">
-                        <div class="col-6 col-sm-6 col-md-3">
-                            <ul class="list-unstyled">
-                                <li><a href="/login">Login</a></li>
-                                <li><a href="/products">Product</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-6 col-sm-6 col-md-3">
-                            <ul class="list-unstyled">
-                                <li><a href="/cart">Cart</a></li>
-                                <li><a href="/checkout">Checkout</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-6 col-sm-6 col-md-3">
-                            <ul class="list-unstyled">
-                                <li><a href="/testimonials">Testimonials</a></li>
-                                <li><a href="/about">About us</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-6 col-sm-6 col-md-3">
-                            <ul class="list-unstyled">
-                                <li><a href="/contact">Contact us</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="border-top copyright">
-                            <div class="row pt-4">
-                                <div class="col-lg-6">
-                                    <p class="mb-2 text-center text-lg-start">Copyright &copy;
-                                        <script>
-                                            document.write(new Date().getFullYear());
-                                        </script>. All Rights Reserved. &mdash; Designed with love by <a
-                                            href="https://untree.co">Untree.co</a> Distributed By <a
-                                            hreff="https://themewagon.com">ThemeWagon</a>
-                                        <!-- License information: https://untree.co/license/ -->
-                                    </p>
-                                </div>
-
-                                <div class="col-lg-6 text-center text-lg-end">
-                                    <ul class="list-unstyled d-inline-flex ms-auto">
-                                        <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
-                                        <li><a href="#">Privacy Policy</a></li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-    </footer>
+    @include('partials.footer')
     <!-- End Footer Section -->
 
 

@@ -16,18 +16,29 @@ class OrderController extends Controller
     {
         $products_to_checkout = $this->getProductsInCart();
         $payment_choices = PaymentController::getPaymentProvidersWithMethods();
-        // dd($payment_choices);
+        $is_cart_empty = count($products_to_checkout['products_in_cart']) == 0;
 
         return view('checkout', [
             'products_to_checkout' => $products_to_checkout['products_in_cart'],
             'total_price' => $products_to_checkout['total_price'],
-            'payment_choices' => $payment_choices
+            'payment_choices' => $payment_choices,
+            'is_cart_empty' => $is_cart_empty
         ]);
     }
 
     public function checkoutSuccessView()
     {
         return view('thankyou');
+    }
+
+    public function historyView()
+    {
+        $orders = Order::with(['detail', 'detail.product'])->where('user_id', Auth::id())->get();
+        dd($orders->toArray());
+
+        return view('history', [
+            'orders' => $orders
+        ]);
     }
 
     public function getProductsInCart()
@@ -46,9 +57,9 @@ class OrderController extends Controller
 
     public function checkout(Request $request)
     {
-        $this->saveOrderInfo($request);
+        $order_info_id = $this->saveOrderInfo($request);
         $price = $this->calculateOrderPrice($request);
-        $order_id = $this->insertOrder($request, $price);
+        $order_id = $this->insertOrder($request, $price, $order_info_id);
         $this->insertOrderDetail($order_id);
 
         Cart::where('user_id', Auth::id())->delete();
@@ -56,7 +67,7 @@ class OrderController extends Controller
         return redirect('/thankyou');
     }
 
-    public function insertOrder(Request $request, $price)
+    public function insertOrder(Request $request, $price, $order_info_id)
     {
         $order = new Order();
         $order->user_id = Auth::id();
@@ -65,6 +76,8 @@ class OrderController extends Controller
         $order->normal_price = $price['total_price'];
         $order->discount_fixed = $price['discount_fixed'];
         $order->final_price = $price['final_price'];
+        $order->account_number = $request->account_number;
+        $order->order_info_id = $order_info_id;
         $order->save();
 
         return $order->id;
@@ -78,6 +91,8 @@ class OrderController extends Controller
             $order_detail->order_id = $order_id;
             $order_detail->product_id = $product_in_cart->product_id;
             $order_detail->quantity = $product_in_cart->quantity;
+            $order_detail->total_normal_price = $product_in_cart->product->price * $product_in_cart->quantity;
+            $order_detail->created_at = now();
             $order_detail->save();
         }
     }
@@ -112,37 +127,38 @@ class OrderController extends Controller
 
     public function saveOrderInfo(Request $request)
     {
-        // $request->validate([
-        //     'country' => 'required',
-        //     'first_name' => 'required',
-        //     'last_name' => 'required',
-        //     'company_name' => '',
-        //     'street_address' => 'required',
-        //     'apartment' => '',
-        //     'state' => 'required',
-        //     'city' => 'required',
-        //     'postcode' => 'required|numeric',
-        //     'phone' => 'required|numeric',
-        //     'email' => 'required|email',
-        //     'order_notes' => '',
-        // ]);
+        $request->validate([
+            'country' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'company_name' => '',
+            'street_address' => 'required',
+            'apartment' => '',
+            'state' => 'required',
+            'postcode' => 'required|numeric',
+            'phone' => 'required|numeric',
+            'email' => 'required|email',
+            'order_notes' => '',
+            'provider_id' => 'required',
+            'account_number' => 'required'
+        ]);
 
-        // $order_info = new OrderInfo();
-        // $order_info->order_id = $request->order_id;
-        // $order_info->user_id = Auth::id();
-        // $order_info->country = $request->country;
-        // $order_info->first_name = $request->first_name;
-        // $order_info->last_name = $request->last_name;
-        // $order_info->company_name = $request->company_name;
-        // $order_info->street_address = $request->street_address;
-        // $order_info->apartment = $request->apartment;
-        // $order_info->state = $request->state;
-        // $order_info->city = $request->city;
-        // $order_info->postcode = $request->postcode;
-        // $order_info->phone = $request->phone;
-        // $order_info->email = $request->email;
-        // $order_info->order_notes = $request->order_notes;
-        // $order_info->save();
+        $order_info = new OrderInfo();
+        $order_info->user_id = Auth::id();
+        $order_info->country = $request->country;
+        $order_info->first_name = $request->first_name;
+        $order_info->last_name = $request->last_name;
+        $order_info->company_name = $request->company_name;
+        $order_info->street_address = $request->street_address;
+        $order_info->apartment = $request->apartment;
+        $order_info->state = $request->state;
+        $order_info->postcode = $request->postcode;
+        $order_info->phone = $request->phone;
+        $order_info->email = $request->email;
+        $order_info->order_notes = $request->order_notes;
+        $order_info->save();
+
+        return $order_info->id;
     }
 
     public function applyCoupon(Request $request)
