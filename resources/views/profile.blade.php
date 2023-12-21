@@ -38,6 +38,40 @@
     </div>
     <!-- End Hero Section -->
 
+    <!-- create edit profile password and email -->
+    <div class="untree_co-section">
+        <div class="container">
+            <div class="block">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-8 pb-4">
+                        <form action="{{ route('profile.update') }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                                <div class="col-md-12 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" value="{{ $user->email }}" class="form-control" />
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" value="{{ $user->password }}"
+                                        class="form-control" />
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label for="password_confirmation">Password Confirmation</label>
+                                    <input type="password" name="password_confirmation"
+                                        value="{{ $user->password_confirmation }}" class="form-control" />
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input type="submit" value="Update Profile" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     <!-- Start Footer Section -->
     @include('partials.footer')
     <!-- End Footer Section -->
