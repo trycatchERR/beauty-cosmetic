@@ -19,35 +19,7 @@
 
   <body>
     <!-- Start Header/Navigation -->
-    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
-      <div class="container">
-        <a class="navbar-brand" href="/">Beauty Cosmetics<span>.</span></a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarsFurni">
-          <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li><a class="nav-link" href="/product">Product</a></li>
-            <li class="active"><a class="nav-link" href="/about">About us</a></li>
-            <li><a class="nav-link" href="/contact">Contact us</a></li>
-          </ul>
-
-          <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-            <li>
-              <a class="nav-link" href="/login"><img src="images/user.svg" /></a>
-            </li>
-            <li>
-              <a class="nav-link" href="/cart"><img src="images/cart.svg" /></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    @include('partials.nav')
     <!-- End Header/Navigation -->
 
     <!-- Start Hero Section -->
@@ -58,7 +30,7 @@
             <div class="intro-excerpt">
               <h1>About Us</h1>
               <p class="mb-4">Pancarkan dan sempurnakan kecantikanmu dengan berbagai produk kosmetik yang kami hadirkan!</p>
-              <p><a href="/product" class="btn btn-secondary me-2">Shop Now</a></p>
+              <p><a href="/products" class="btn btn-secondary me-2">Shop Now</a></p>
             </div>
           </div>
           <div class="col-lg-7">
@@ -222,7 +194,7 @@
                       <div class="testimonial-block text-center">
                         <blockquote class="mb-5">
                           <p>
-                            &ldquo;Saya telah menggunakan website ini untuk beberapa bulan, dan saya sangat senang dengan pengalaman berbelanja saya. 
+                            &ldquo;Saya telah menggunakan website ini untuk beberapa bulan, dan saya sangat senang dengan pengalaman berbelanja saya.
 							              Mereka memiliki berbagai produk kosmetik yang sangat berkualitas dan beragam. Saya telah menemukan banyak produk favorit saya di sini.&ldquo;</p>
                         </blockquote>
 
@@ -246,7 +218,7 @@
                         <blockquote class="mb-5">
                           <p>
                             &ldquo;Produk yang saya beli selalu datang dalam kemasan yang aman, sehingga saya tidak perlu khawatir tentang kerusakan dalam perjalanan pengiriman.
-							              Produk-produk yang saya beli dari sini sangat berkualitas, dan saya telah melihat perubahan positif pada kulit saya sejak saya mulai menggunakannya. 
+							              Produk-produk yang saya beli dari sini sangat berkualitas, dan saya telah melihat perubahan positif pada kulit saya sejak saya mulai menggunakannya.
 							              Saya telah merekomendasikan website ini kepada teman-teman saya, dan saya akan terus berbelanja di sini. Terima kasih banyak!&ldquo;</p>
                         </blockquote>
 
@@ -269,7 +241,7 @@
                       <div class="testimonial-block text-center">
                         <blockquote class="mb-5">
                           <p>
-                            &ldquo;Secara keseluruhan, saya sangat merekomendasikan website ini kepada siapa saja yang mencari produk kosmetik berkualitas dengan pengalaman berbelanja 
+                            &ldquo;Secara keseluruhan, saya sangat merekomendasikan website ini kepada siapa saja yang mencari produk kosmetik berkualitas dengan pengalaman berbelanja
                             yang menyenangkan. Proses pembelian sangat mudah dan cepat. Saya tidak pernah mengalami masalah saat melakukan pembayaran ataupun pengiriman pesanan.&rdquo;
                           </p>
                         </blockquote>
@@ -295,88 +267,7 @@
     <!-- End Testimonial Slider -->
 
     <!-- Start Footer Section -->
-    <footer class="footer-section">
-      <div class="container relative">
-
-        <div class="row">
-          <div class="col-lg-8">
-            </div>
-        </div>
-
-        <div class="row g-5 mb-5">
-          <div class="col-lg-4">
-            <div class="mb-4 footer-logo-wrap">
-              <a href="#" class="footer-logo">Beauty Cosmetics<span>.</span></a>
-            </div>
-            <p class="mb-4">Pancarkan dan sempurnakan kecantikanmu dengan berbagai produk kosmetik yang kami hadirkan!. Temukan kami juga di:</p>
-
-            <ul class="list-unstyled custom-social">
-              <li>
-                <a href="https://www.facebook.com/"><span class="fa fa-brands fa-facebook-f"></span></a>
-              </li>
-              <li>
-                <a href="https://twitter.com/"><span class="fa fa-brands fa-twitter"></span></a>
-              </li>
-              <li>
-                <a href="https://www.instagram.com/"><span class="fa fa-brands fa-instagram"></span></a>
-              </li>
-              <li>
-                <a href="https://www.tiktok.com/"><span class="fa fa-brands fa-tiktok"></span></a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="col-lg-8">
-            <div class="row links-wrap">
-              <div class="col-6 col-sm-6 col-md-3">
-                <ul class="list-unstyled">
-				  <li><a href="/login">Login</a></li>
-                  <li><a href="/product">Product</a></li>
-                </ul>
-              </div>
-			  
-			  <div class="col-6 col-sm-6 col-md-3">
-                <ul class="list-unstyled">
-				  <li><a href="/cart">Cart</a></li>
-                  <li><a href="/checkout">Checkout</a></li>
-                </ul>
-              </div>
-
-			  <div class="col-6 col-sm-6 col-md-3">
-                <ul class="list-unstyled">
-				  <li><a href="/testimonials">Testimonials</a></li>
-                  <li><a href="/about">About us</a></li>
-                </ul>
-              </div>
-
-			  <div class="col-6 col-sm-6 col-md-3">
-                <ul class="list-unstyled">
-				  <li><a href="/contact">Contact us</a></li>
-                </ul>
-              </div>
-
-        <div class="border-top copyright">
-          <div class="row pt-4">
-            <div class="col-lg-6">
-              <p class="mb-2 text-center text-lg-start">
-                Copyright &copy;
-                <script>
-                  document.write(new Date().getFullYear());
-                </script>
-                . All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>
-                </p>
-            </div>
-
-            <div class="col-lg-6 text-center text-lg-end">
-              <ul class="list-unstyled d-inline-flex ms-auto">
-                <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    @include('partials.footer')
     <!-- End Footer Section -->
 
     <script src="js/bootstrap.bundle.min.js"></script>
